@@ -1,18 +1,18 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Plus, Trash2, GripVertical, RotateCcw, CalendarDays, Tag, X } from "lucide-react";
 
-const INK = "#4A2438";
-const INK_DIM = "#9B6E8B";
-const INK_FAINT = "#C79EBA";
-const BG = "#FFF6FA";
-const PANEL = "#FFFFFF";
-const PANEL_HOVER = "#FDECF4";
-const LINE = "#F5D9E8";
-const AMBER = "#E0568E";
-const AMBER_DIM = "#FBDCE9";
-const TEAL = "#43B98A";
-const RED = "#E0526B";
-const ON_ACCENT = "#FFFFFF";
+const INK = "#E7E9F5";
+const INK_DIM = "#9AA0C4";
+const INK_FAINT = "#5E6488";
+const BG = "#12172B";
+const PANEL = "#1A2036";
+const PANEL_HOVER = "#212843";
+const LINE = "#2B3252";
+const AMBER = "#A78BFA";
+const AMBER_DIM = "#2B2650";
+const TEAL = "#7FC8D8";
+const RED = "#E2726F";
+const ON_ACCENT = "#1A1330";
 
 const IMPORTANCE_LEVELS = [
   { value: 1, label: "Low" },
@@ -20,14 +20,14 @@ const IMPORTANCE_LEVELS = [
   { value: 5, label: "High" },
 ];
 
-// cycling palette for user-created tags, {bg, text} pairs, pastel/light-mode friendly
+// cycling palette for user-created tags, {bg, text} pairs, tuned to the navy/lilac theme
 const TAG_PALETTE = [
-  { bg: "#FDE1EF", text: "#C13584" }, // pink
-  { bg: "#F1E3FC", text: "#8B5CF6" }, // lavender
-  { bg: "#FFE8DA", text: "#D96B32" }, // peach
-  { bg: "#DEF5EA", text: "#159066" }, // mint
-  { bg: "#DDEEFB", text: "#2E7DC0" }, // sky
-  { bg: "#FFF3D6", text: "#B9860B" }, // gold
+  { bg: "#2B2650", text: "#B9A3F5" }, // lilac
+  { bg: "#1B3A42", text: "#7FC8D8" }, // teal
+  { bg: "#1F2A4A", text: "#8FA8E8" }, // blue
+  { bg: "#402A44", text: "#D19BD8" }, // plum
+  { bg: "#3A2F1F", text: "#D8B87F" }, // brass
+  { bg: "#2A3A22", text: "#A3D18B" }, // sage
 ];
 
 function hashTag(tag) {
@@ -239,12 +239,14 @@ export default function PriorityTaskManager() {
   }
 
   return (
-    <div style={{ background: BG, color: INK, minHeight: "100%", padding: "32px 20px", fontFamily: "ui-sans-serif, system-ui, sans-serif" }}>
+    <div style={{ background: BG, color: INK, minHeight: "100vh", width: "100%", boxSizing: "border-box", padding: "32px 20px", fontFamily: "ui-sans-serif, system-ui, sans-serif" }}>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 4 }}>
           <div>
-            <div style={{ fontSize: 11, letterSpacing: "0.14em", color: AMBER, fontWeight: 600, marginBottom: 6 }}>PRIORITY QUEUE</div>
-            <h1 style={{ color: "pink", fontSize: 22, fontWeight: 600, margin: 0 }}>Today's tasks</h1>
+            <div style={{ fontSize: 11, letterSpacing: "0.14em", color: AMBER, fontWeight: 600, marginBottom: 6 }}>
+              PRIORITY QUEUE
+            </div>
+            <h1 style={{ fontSize: 24, fontWeight: 600, margin: 0 }}>Today's tasks</h1>
           </div>
           {manualOrder && (
             <button
@@ -266,7 +268,7 @@ export default function PriorityTaskManager() {
               style={{
                 fontSize: 12,
                 padding: "5px 10px",
-                borderRadius: 999,
+                borderRadius: 6,
                 border: `1px solid ${!filterTag ? AMBER : LINE}`,
                 background: !filterTag ? AMBER_DIM : "transparent",
                 color: !filterTag ? AMBER : INK_DIM,
@@ -285,7 +287,7 @@ export default function PriorityTaskManager() {
                   style={{
                     fontSize: 12,
                     padding: "5px 10px",
-                    borderRadius: 999,
+                    borderRadius: 6,
                     border: `1px solid ${active ? c.text : LINE}`,
                     background: active ? c.bg : "transparent",
                     color: active ? c.text : INK_DIM,
@@ -299,7 +301,7 @@ export default function PriorityTaskManager() {
           </div>
         )}
 
-        <form onSubmit={addTask} style={{ background: PANEL, border: `1px solid ${LINE}`, borderRadius: 12, padding: 14, marginBottom: 28, display: "flex", flexDirection: "column", gap: 10 }}>
+        <form onSubmit={addTask} style={{ background: PANEL, border: `1px solid ${LINE}`, borderRadius: 10, padding: 16, marginBottom: 28, display: "flex", flexDirection: "column", gap: 10 }}>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -320,7 +322,7 @@ export default function PriorityTaskManager() {
                   style={{
                     fontSize: 11,
                     padding: "4px 8px",
-                    borderRadius: 999,
+                    borderRadius: 6,
                     border: `1px solid ${on ? c.text : LINE}`,
                     background: on ? c.bg : "transparent",
                     color: on ? c.text : INK_FAINT,
@@ -377,7 +379,7 @@ export default function PriorityTaskManager() {
             </div>
             <button
               type="submit"
-              style={{ display: "flex", alignItems: "center", gap: 6, background: AMBER, color: ON_ACCENT, border: "none", borderRadius: 7, padding: "7px 12px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+              style={{ display: "flex", alignItems: "center", gap: 6, background: AMBER, color: ON_ACCENT, border: "none", borderRadius: 6, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
             >
               <Plus size={14} /> Add
             </button>
@@ -406,8 +408,8 @@ export default function PriorityTaskManager() {
                 style={{
                   background: isOver ? PANEL_HOVER : PANEL,
                   border: `1px solid ${isOver ? AMBER : LINE}`,
-                  borderRadius: 10,
-                  padding: "10px 12px",
+                  borderRadius: 8,
+                  padding: "12px 14px",
                   display: "flex",
                   alignItems: "center",
                   gap: 10,
@@ -420,14 +422,14 @@ export default function PriorityTaskManager() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 14, color: INK, marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.title}</div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                    <div style={{ width: 46, height: 4, borderRadius: 2, background: LINE, overflow: "hidden" }}>
+                    <div style={{ width: 50, height: 5, borderRadius: 6, background: LINE, overflow: "hidden" }}>
                       <div style={{ width: `${barPct}%`, height: "100%", background: AMBER }} />
                     </div>
                     {due && <span style={{ fontSize: 11, color: toneColor(due.tone) }}>{due.text}</span>}
                     {(t.tags || []).map((tag) => {
                       const c = tagColor(tag);
                       return (
-                        <span key={tag} style={{ fontSize: 10, padding: "2px 7px", borderRadius: 999, background: c.bg, color: c.text }}>
+                        <span key={tag} style={{ fontSize: 10, padding: "2px 7px", borderRadius: 6, background: c.bg, color: c.text }}>
                           {tag}
                         </span>
                       );
